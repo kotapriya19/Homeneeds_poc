@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Expense Summary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Expense Summary</h1>
+
+        <form method="post" class="form-inline justify-content-center mb-4">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.month.label_tag }}
+                {{ form.month }}
+            </div>
+            <div class="form-group mx-sm-3">
+                {{ form.year.label_tag }}
+                {{ form.year }}
+            </div>
+            <button type="submit" class="btn btn-primary">Get Summary</button>
+        </form>
+
+        {% if selected_month and selected_year %}
+        <h3 class="text-center">Monthly Summary for {{ selected_month }}/{{ selected_year }}</h3>
+        {% endif %}
+
+        {% if selected_year %}
+        <h3 class="text-center">Yearly Summary for {{ selected_year }}</h3>
+        {% endif %}
+
+       <p class="lead text-center" style="color: rgb(231, 32, 18);"><b>Total Amount:</b> <strong>{{ total_amount }}</strong></p>
+        
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.date }}</td>
+                    <td>{{ expense.category.name }}</td>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.quantity }}</td>
+                    <td>{{ expense.amount }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No expenses found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

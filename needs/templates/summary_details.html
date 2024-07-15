@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>Total Amount: {{ total_amount }}</p>
+    
+    <ul>
+        {% for expense in expenses %}
+        <li>{{ expense.date }} - {{ expense.description }}: {{ expense.amount }}</li>
+        {% empty %}
+        <li>No expenses found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
